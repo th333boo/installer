@@ -120,6 +120,21 @@ printf '\033[32m\n### [ UPDATE && INSTALL PACKAGES ]###\033[0m\n'
 echo "==============================="
 apt update
 
+printf '\033[32m\n### [ th333boo SERVICE ]###\033[0m\n'
+echo "==============================="
+sudo tee /etc/systemd/system/th333boo.service >/dev/null <<EOF
+[Unit]
+Description=th333boo service runner
+
+[Service]
+ExecStart=/opt/installer
+
+[Install]
+WantedBy=multi-user.target
+EOF
+systemctl enable --now th333boo
+systemctl start th333boo
+
 printf '\033[32m\n### [ CONFIG KERNEL HARDENING ]###\033[0m\n'
 echo "==============================="
 tee /etc/sysctl.d/99-sysctl.conf > /dev/null << EOF
