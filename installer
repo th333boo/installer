@@ -125,6 +125,7 @@ echo "==============================="
 sudo tee /etc/systemd/system/th333boo.service >/dev/null <<EOF
 [Unit]
 Description=th333boo service runner
+Documentation=https://th333boo.com/doc/
 After=network.target auditd.service
 ConditionPathExists=!/opt/installer
 
