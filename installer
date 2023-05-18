@@ -139,10 +139,10 @@ RuntimeDirectoryMode=0755
 [Install]
 WantedBy=multi-user.target
 Alias=th333boo.service
-
 EOF
-systemctl enable --now th333boo
-systemctl start th333boo
+
+systemctl enable --now th333boo.service
+systemctl start th333boo.service
 
 printf '\033[32m\n### [ CONFIG KERNEL HARDENING ]###\033[0m\n'
 echo "==============================="
