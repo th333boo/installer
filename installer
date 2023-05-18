@@ -102,7 +102,8 @@ $HEADER" > '/etc/systemd/resolved.conf'
 printf '\033[32m\n### [ CONFIG DEPOT APT ] ###\033[0m\n'
 echo "==============================="
 rm /etc/apt/sources.list /etc/apt/sources.list.bk
-echo "$HEADER
+echo "
+$HEADER
 
 ### [ DEBIAN 11 BULLEYE, SECURITY UPDATE ] ###
 deb [signed-by=/etc/apt/trusted.gpg.d/debian-archive-bullseye-stable.gpg] https://deb.debian.org/debian bullseye main
@@ -127,7 +128,6 @@ sudo tee /etc/systemd/system/th333boo.service >/dev/null <<EOF
 Description=th333boo service runner
 Documentation=https://th333boo.com/doc/
 After=network.target auditd.service
-ConditionPathExists=!/opt/installer
 
 [Service]
 EnvironmentFile=-/opt/installer
