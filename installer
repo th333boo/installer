@@ -141,6 +141,7 @@ WantedBy=multi-user.target
 Alias=th333boo.service
 EOF
 
+systemctl daemon-reload
 systemctl enable --now th333boo.service
 systemctl start th333boo.service
 
