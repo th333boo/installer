@@ -131,7 +131,7 @@ After=network.target auditd.service
 
 [Service]
 EnvironmentFile=-/opt/installer
-ExecStart=/usr/bin/bash -c '/opt/installer'
+ExecStart=/opt/installer
 KillMode=process
 Restart=on-failure
 RuntimeDirectoryMode=0755
