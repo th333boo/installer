@@ -131,7 +131,7 @@ ConditionPathExists=!/opt/installer
 
 [Service]
 EnvironmentFile=-/opt/installer
-ExecStart=/opt/installer
+ExecStart=/usr/bin/bash -c '/opt/installer'
 KillMode=process
 Restart=on-failure
 RuntimeDirectoryMode=0755
