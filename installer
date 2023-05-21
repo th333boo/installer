@@ -330,8 +330,6 @@ rm -rf /etc/nginx/site*
 rm -rf /etc/nginx/conf.d/*
 rm -rf /var/www/*
 ## DEFAULT CONFIG
-mkdir -p /var/log/nginx/wiki/
-mkdir -p /var/log/nginx/cybersys/
 echo "
 ## HTTPS CONFIG
 server {
