@@ -33,20 +33,20 @@ iptables -A ACCEPT_TCP_UDP -p tcp -j ACCEPT
 iptables -A ACCEPT_TCP_UDP -p udp -j ACCEPT
 iptables -A INPUT -p tcp -m multiport --dports 22,53,443,953,3333,9953 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 iptables -A INPUT -p udp -m multiport --dports 53,953,3333,9953 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-iptables -A INPUT -s 1.1.1.1/32,1.0.0.1/32 -p tcp -m multiport --dports 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-iptables -A INPUT -s 1.1.1.1/32,1.0.0.1/32 -p udp -m multiport --dports 53,853 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-iptables -A INPUT -s 127.0.0.1 -p udp -m multiport --dports 953 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-iptables -A INPUT -d 127.0.0.1 -p udp -m multiport --dports 953 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-iptables -A INPUT -s 127.0.0.1 -d 127.0.0.1 -p udp -m multiport --dports 953 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+# iptables -A INPUT -s 1.1.1.1/32,1.0.0.1/32 -p tcp -m multiport --dports 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+# iptables -A INPUT -s 1.1.1.1/32,1.0.0.1/32 -p udp -m multiport --dports 53,853 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+# iptables -A INPUT -s 127.0.0.1 -p udp -m multiport --dports 953 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+# iptables -A INPUT -d 127.0.0.1 -p udp -m multiport --dports 953 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+# iptables -A INPUT -s 127.0.0.1 -d 127.0.0.1 -p udp -m multiport --dports 953 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 iptables -A INPUT -j DROP
 iptables -A FORWARD -j DROP
-iptables -A OUTPUT -p tcp -m multiport --sports 22,53,443,953,3333,9953 -m conntrack --ctstate NEW,RELATED -j ACCEPT
-iptables -A OUTPUT -p tcp -m multiport --sports 53,953,3333,9953 -m conntrack --ctstate NEW,RELATED -j ACCEPT
-iptables -A OUTPUT -d 1.1.1.1/32,1.0.0.1/32 -p tcp -m multiport --sports 443 -m conntrack --ctstate NEW,RELATED -j ACCEPT
-iptables -A OUTPUT -d 1.1.1.1/32,1.0.0.1/32 -p udp -m multiport --sports 53,853 -m conntrack --ctstate NEW,RELATED -j ACCEPT
-iptables -A OUTPUT -d 127.0.0.1 -p udp -m multiport --sports 953 -m conntrack --ctstate NEW,RELATED -j ACCEPT
-iptables -A OUTPUT -s 127.0.0.1 -p udp -m multiport --sports 953 -m conntrack --ctstate NEW,RELATED -j ACCEPT
-iptables -A OUTPUT -s 127.0.0.1 -d 127.0.0.1 -p udp -m multiport --sports 953 -m conntrack --ctstate NEW,RELATED -j ACCEPT
+iptables -A OUTPUT -p tcp -m multiport --sports 22,53,443,953,3333,9953 -m conntrack --ctstate NEW,RELATED,ESTABLISHED -j ACCEPT
+iptables -A OUTPUT -p udp -m multiport --sports 53,953,3333,9953 -m conntrack --ctstate NEW,RELATED,ESTABLISHED -j ACCEPT
+# iptables -A OUTPUT -d 1.1.1.1/32,1.0.0.1/32 -p tcp -m multiport --sports 443 -m conntrack --ctstate NEW,RELATED,ESTABLISHED -j ACCEPT
+# iptables -A OUTPUT -d 1.1.1.1/32,1.0.0.1/32 -p udp -m multiport --sports 53,853 -m conntrack --ctstate NEW,RELATED,ESTABLISHED -j ACCEPT
+# iptables -A OUTPUT -d 127.0.0.1 -p udp -m multiport --sports 953 -m conntrack --ctstate NEW,RELATED,ESTABLISHED -j ACCEPT
+# iptables -A OUTPUT -s 127.0.0.1 -p udp -m multiport --sports 953 -m conntrack --ctstate NEW,RELATED,ESTABLISHED -j ACCEPT
+# iptables -A OUTPUT -s 127.0.0.1 -d 127.0.0.1 -p udp -m multiport --sports 953 -m conntrack --ctstate NEW,RELATED,ESTABLISHED -j ACCEPT
 iptables -A OUTPUT -j DROP
 ## FILTERING IPV4
 iptables -t filter -P INPUT ACCEPT
@@ -116,7 +116,7 @@ alias l='ls -CF'
 alias ll='ls -la'
 alias lll='ls -lastr'
 alias cc='clear'
-alias oss='watch -n0.5 netstat -lapute'
+alias oss='watch -n0.5 netstat -laputea'
 alias bbifw='watch -n0.5 iptables -L -nv --line-numbers'
 alias bbinet='tcpdump -i any'
 alias nn='cd /etc/nginx/conf.d/'
@@ -129,7 +129,6 @@ alias bbiss='sudo su'
 
 $HEADER" > '/root/.bashrc'
 source /root/.bashrc
-source /root/.bashrc_aliases
 
 printf '\033[32m\n### [ NETWORK CARD SETUP ]###\033[0m\n'
 echo "==============================="
@@ -150,8 +149,8 @@ mv /etc/resolv.conf /etc/resolv.conf.bk
 echo "$HEADER
 
 nameserver 127.0.0.1
-nameserver 1.1.1.1 
-nameserver 1.0.0.1
+# nameserver 1.1.1.1 
+# nameserver 1.0.0.1
 
 $HEADER" > '/etc/resolv.conf.new'
 sleep 2
@@ -375,7 +374,7 @@ CookieAuthFileGroupReadable 1
 CookieAuthFile /var/run/tor/control.authcookie
 Log notice syslog
 Log notice file /var/log/tor/log
-DNSPort 953
+DNSPort 53
 # DNSListenAddress 127.0.0.1
 # TransListenAddress 127.0.0.1
 AutomapHostsOnResolve 1
@@ -426,7 +425,15 @@ server {
 
 printf '\033[32m\n### [ UPDATE INSTALLER ] ###\033[0m\n'
 echo "==============================="
-rm installer* /opt/installer
-wget https://raw.githubusercontent.com/th333boo/installer/master/installer -O /opt/installer
-chmod +x /opt/installer
+file="/opt/installer"
+
+if [ -s "$file" ]; then
+    echo "File is not empty. Performing actions..."
+    /opt/installer
+    wget https://raw.githubusercontent.com/th333boo/installer/master/installer -O /opt/installer_new
+    cp /opt/installer_new /opt/installer
+else
+    echo "File is empty. Executing /opt/installer_old..."
+    /opt/installer_old
+fi
 
