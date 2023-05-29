@@ -410,7 +410,7 @@ echo "
 ## HTTPS CONFIG
 server {
     listen 443 ssl http2;
-    listen [::]:443 ssl http2;
+#    listen [::]:443 ssl http2;
     server_name _;
     index index.html;
 
@@ -419,6 +419,10 @@ server {
 #                allow 127.0.0.1/24;
 #                deny all;
 #        }
+
+    ssl_certificate /etc/ssl/certs/ssl-cert-snakeoil.pem;
+    ssl_certificate_key /etc/ssl/private/ssl-cert-snakeoil.key;
+
     access_log /var/log/nginx/access.log;
     error_log /var/log/nginx/error.log info;
 }" > '/etc/nginx/conf.d/default.conf'
