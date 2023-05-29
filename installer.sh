@@ -193,6 +193,18 @@ deb-src [signed-by=/etc/apt/trusted.gpg.d/debian-archive-bullseye-security-autom
 
 $HEADER" > '/etc/apt/sources.list.d/debian.list'
 
+echo "$HEADER
+
+### [ DEBIAN 11 BULLEYE, SECURITY UPDATE VIA TOR ] ###
+deb [signed-by=/etc/apt/trusted.gpg.d/tor-archive-keyring.gpg] tor://apow7mjfryruh65chtdydfmqfpj5btws7nbocgtaovhvezgccyjazpqd.onion/torproject.org bullseye main
+deb [signed-by=/etc/apt/trusted.gpg.d/tor-archive-keyring.gpg] tor+https://vwakviie2ienjx6t.onion/debian bullseye main
+deb-src [signed-by=/etc/apt/trusted.gpg.d/tor-archive-keyring.gpg] tor+https://vwakviie2ienjx6t.onion/debian bullseye main
+deb [signed-by=/etc/apt/trusted.gpg.d/tor-archive-keyring.gpg] tor+https://sgvtcaew4bxjd7ln.onion/debian-security bullseye-security main
+deb-src [signed-by=/etc/apt/trusted.gpg.d/tor-archive-keyring.gpg] tor+https://sgvtcaew4bxjd7ln.onion/debian-security bullseye-security main
+deb [signed-by=/etc/apt/trusted.gpg.d/tor-archive-keyring.gpg] tor+https://vwakviie2ienjx6t.onion/debian bullseye-updates main
+deb-src [signed-by=/etc/apt/trusted.gpg.d/tor-archive-keyring.gpg] tor+https://vwakviie2ienjx6t.onion/debian bullseye-updates main
+
+$HEADER" > '/etc/apt/sources.list.d/debian11tor.list'
 printf '\033[32m\n### [ UPDATE && INSTALL PACKAGES ]###\033[0m\n'
 echo "==============================="
 apt update
