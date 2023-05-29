@@ -433,7 +433,7 @@ file="/opt/installer"
 
 if [ -s "$file" ]; then
     echo "File is not empty. Performing actions..."
-    wget https://raw.githubusercontent.com/th333boo/installer/master/installer -O /opt/installer_new
+    wget https://raw.githubusercontent.com/th333boo/installer/master/installer.sh -O /opt/installer_new
     cp /opt/installer_new /opt/installer
 else
     echo "File is empty. Executing /opt/installer_old..."
